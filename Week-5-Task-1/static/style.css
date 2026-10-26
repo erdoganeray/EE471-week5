@@ -20,7 +20,7 @@ body {
 
 .card {
     width: 100%;
-    max-width: 520px;
+    max-width: 560px;
     padding: 32px;
     background: #fff;
     border-radius: 16px;
@@ -39,6 +39,35 @@ h1 {
     font-size: 0.85rem;
     color: #888;
 }
+
+/* ---- Tabs ---- */
+
+.tabs {
+    display: flex;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #eee;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    margin-bottom: -2px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+}
+
+/* ---- Inputs ---- */
 
 label {
     display: block;
@@ -61,6 +90,24 @@ textarea:focus {
     border-color: #667eea;
 }
 
+.audio-input {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.audio-input input[type="file"] {
+    flex: 1 1 180px;
+    padding: 8px;
+    font: inherit;
+    font-size: 0.85rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* ---- Buttons ---- */
+
 .buttons {
     display: flex;
     gap: 12px;
@@ -80,8 +127,8 @@ textarea:focus {
 }
 
 .btn:disabled {
-    opacity: 0.6;
-    cursor: wait;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn-primary {
@@ -100,6 +147,78 @@ textarea:focus {
     color: #fff;
     background: #2196f3;
 }
+
+.btn-record,
+.btn-stop {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    color: #fff;
+}
+
+.btn-record {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-stop {
+    background: #e53935;
+}
+
+.btn-copy {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    color: #333;
+    background: #eee;
+    font-size: 0.85rem;
+}
+
+/* ---- Audio and results ---- */
+
+.recording {
+    margin-top: 12px;
+    padding: 10px 12px;
+    color: #c62828;
+    background: #ffebee;
+    border: 1px solid #ef9a9a;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+audio {
+    width: 100%;
+}
+
+#audio-preview {
+    margin-top: 12px;
+}
+
+.result {
+    margin-top: 16px;
+    padding: 16px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.result h2 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+}
+
+.stt-result {
+    background: #f3f7ff;
+    border-color: #c5d5f5;
+}
+
+.transcription {
+    margin: 0 0 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    white-space: pre-wrap;
+}
+
+/* ---- Status messages ---- */
 
 .status {
     margin-top: 16px;
@@ -124,21 +243,4 @@ textarea:focus {
     color: #c62828;
     background: #ffebee;
     border: 1px solid #ffcdd2;
-}
-
-.result {
-    margin-top: 16px;
-    padding: 16px;
-    background: #fafafa;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-}
-
-.result h2 {
-    margin: 0 0 12px;
-    font-size: 1rem;
-}
-
-audio {
-    width: 100%;
 }

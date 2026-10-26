@@ -3,28 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text-to-Speech</title>
+    <title>Azure Speech Services</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main class="card">
-        <h1>🎤 Text-to-Speech</h1>
-        <p class="subtitle">Powered by Azure Cognitive Services</p>
+        <h1>🎤 Azure Speech Services</h1>
+        <p class="subtitle">Text-to-Speech &amp; Speech-to-Text powered by Azure Cognitive Services</p>
 
-        <label for="text-input">Enter text to convert to speech:</label>
-        <textarea id="text-input" rows="5" maxlength="5000" placeholder="Hello, EE471 class"></textarea>
-
-        <div class="buttons">
-            <button id="synthesize-btn" class="btn btn-primary">🔊 Synthesize Speech</button>
-            <button id="clear-btn" class="btn btn-secondary">Clear</button>
+        <div class="tabs" role="tablist">
+            <button class="tab active" role="tab" aria-selected="true" data-panel="tts-panel">Text to Speech</button>
+            <button class="tab" role="tab" aria-selected="false" data-panel="stt-panel">Speech to Text</button>
         </div>
 
-        <div id="status" class="status" hidden></div>
+        <!-- Text to Speech -->
+        <section id="tts-panel" class="panel" role="tabpanel">
+            <label for="text-input">Enter text to convert to speech:</label>
+            <textarea id="text-input" rows="5" maxlength="5000" placeholder="Hello, EE471 class"></textarea>
 
-        <section id="result" class="result" hidden>
-            <h2>Generated Audio:</h2>
-            <audio id="audio-player" controls></audio>
-            <a id="download-link" class="btn btn-download" download="speech.wav">⬇ Download Audio</a>
+            <div class="buttons">
+                <button id="synthesize-btn" class="btn btn-primary">🔊 Synthesize Speech</button>
+                <button id="tts-clear-btn" class="btn btn-secondary">Clear</button>
+            </div>
+
+            <div id="tts-status" class="status" hidden></div>
+
+            <section id="tts-result" class="result" hidden>
+                <h2>Generated Audio:</h2>
+                <audio id="audio-player" controls></audio>
+                <a id="download-link" class="btn btn-download" download="speech.wav">⬇ Download Audio</a>
+            </section>
+        </section>
+
+        <!-- Speech to Text -->
+        <section id="stt-panel" class="panel" role="tabpanel" hidden>
+            <label for="file-input">Record or upload audio to convert to text:</label>
+            <div class="audio-input">
+                <button id="record-btn" class="btn btn-record">🎙 Start Recording</button>
+                <button id="stop-btn" class="btn btn-stop" disabled>⏹ Stop Recording</button>
+                <input id="file-input" type="file" accept=".wav,audio/wav">
+            </div>
+
+            <div id="recording" class="recording" hidden>● Recording...</div>
+            <audio id="audio-preview" controls hidden></audio>
+
+            <div class="buttons">
+                <button id="transcribe-btn" class="btn btn-primary">📄 Transcribe Audio</button>
+                <button id="stt-clear-btn" class="btn btn-secondary">Clear</button>
+            </div>
+
+            <section id="stt-result" class="result stt-result" hidden>
+                <h2>Transcription:</h2>
+                <p id="transcription" class="transcription"></p>
+                <button id="copy-btn" class="btn btn-copy">📋 Copy Text</button>
+            </section>
+
+            <div id="stt-status" class="status" hidden></div>
         </section>
     </main>
 

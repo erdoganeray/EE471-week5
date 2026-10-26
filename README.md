@@ -53,7 +53,14 @@ cd Week-5-Task-1
 python app.py
 ```
 
-Then open http://127.0.0.1:5000. Prompts are in [PROMPTS.md](Week-5-Task-1/PROMPTS.md).
+Then open http://127.0.0.1:5000 in Chrome or Edge. Prompts are in [PROMPTS.md](Week-5-Task-1/PROMPTS.md).
+
+| Tab | What it does | API |
+|---|---|---|
+| **Text to Speech** | Type text → play or download the generated WAV file | `POST /api/synthesize` with `{"text": "..."}` → `audio/wav` |
+| **Speech to Text** | Record with the microphone or choose a 16-bit PCM WAV file (mono or stereo) → transcription with a copy button | `POST /api/transcribe` with form field `audio` → `{"text": "..."}` |
+
+Errors are returned as `{"error": "<message>"}` and shown on the page.
 
 ### Branches
 
