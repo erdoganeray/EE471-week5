@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Week 4 calculator with a microphone button on the left -->
+  <div class="calculator">
+    <button class="mic" id="mic" aria-label="Start voice commands" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="9" y="3" width="6" height="11" rx="3" />
+        <path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" />
+      </svg>
+    </button>
+
+    <div class="main">
+      <div class="display" id="display">0</div>
+
+      <div class="keypad" id="keypad">
+        <div class="row">
+          <button class="key digit" data-value="7">7</button>
+          <button class="key digit" data-value="8">8</button>
+          <button class="key digit" data-value="9">9</button>
+          <button class="key operator" data-value="/">÷</button>
+        </div>
+        <div class="row">
+          <button class="key digit" data-value="4">4</button>
+          <button class="key digit" data-value="5">5</button>
+          <button class="key digit" data-value="6">6</button>
+          <button class="key operator" data-value="*">x</button>
+        </div>
+        <div class="row">
+          <button class="key digit" data-value="1">1</button>
+          <button class="key digit" data-value="2">2</button>
+          <button class="key digit" data-value="3">3</button>
+          <button class="key operator" data-value="-">-</button>
+        </div>
+        <div class="row">
+          <button class="key digit" data-value="0">0</button>
+          <button class="key decimal" data-value=".">.</button>
+          <button class="key equals" data-value="=">=</button>
+          <button class="key operator" data-value="+">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="voice-status" id="voice-status">Press the microphone and say, for example: "five plus two is"</p>
+
+  <!-- Azure Speech SDK: speech recognition and speech synthesis in the browser -->
+  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@1.53.0/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

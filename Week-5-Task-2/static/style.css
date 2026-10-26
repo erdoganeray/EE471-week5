@@ -1,0 +1,140 @@
+/* Sizes and colors are taken from the Figma design (design/calculator.png) */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 700;
+}
+
+/* Calculator frame: microphone on the left, display and keypad on the right */
+.calculator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 10px;
+  background: #0B78D0;
+}
+
+/* Display and keypad: vertical Auto Layout, gap 6 */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Microphone button: gray circle, red and pulsing while listening */
+.mic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 2px solid #4A4A4A;
+  border-radius: 50%;
+  background: #BDBDBD;
+  cursor: pointer;
+}
+
+.mic svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #333333;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.mic.listening {
+  border-color: #FFFFFF;
+  background: #E53935;
+  animation: pulse 1.2s infinite;
+}
+
+.mic.listening svg {
+  stroke: #FFFFFF;
+}
+
+.mic:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgba(229, 57, 53, 0.35);
+  }
+}
+
+/* What the microphone heard, shown under the calculator */
+.voice-status {
+  max-width: 360px;
+  min-height: 1.4em;
+  margin: 0;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Display: 278 x 64, text aligned to the right */
+.display {
+  box-sizing: border-box;
+  width: 278px;
+  height: 64px;
+  padding: 0 10px;
+  overflow: hidden;
+  background: #FFFFFF;
+  font-size: 36px;
+  line-height: 64px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Smaller text so error messages from the server fit */
+.display.error {
+  font-size: 18px;
+}
+
+/* Keypad: rows stacked vertically, gap 6 */
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Row: buttons side by side, gap 6 */
+.row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Button: 65 x 45 */
+.key {
+  width: 65px;
+  height: 45px;
+  border: none;
+  color: #FFFFFF;
+  font: inherit;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.digit {
+  background: #7A7A7A;
+}
+
+.operator,
+.decimal {
+  background: #A0A0A0;
+}
+
+.equals {
+  background: #004E99;
+}

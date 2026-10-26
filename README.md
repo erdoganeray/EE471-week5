@@ -2,28 +2,60 @@
 
 EE 471 Modern Software Development Practices and Technologies, Izmir Institute of Technology.
 
-| Folder | Task |
+| Path | Content |
 |---|---|
 | `Week-5-Task-1/` | Speech-studio website (Flask + Azure Speech): text-to-speech & speech-to-text |
 | `Week-5-Task-2/` | Voice-activated calculator |
+| `EE471_MP1_Calculator/` | [Mini Project 1](https://github.com/erdoganeray/EE471_MP1_Calculator), included as a Git submodule (used by Task 2) |
 
 ## Setup
 
-1. Clone the repository.
-2. Create your local secrets file from the template and fill in your own Azure Speech key and region:
+1. Clone the repository together with the submodule:
+   ```bash
+   git clone --recurse-submodules https://github.com/erdoganeray/EE471-week5.git
+   ```
+   If it was already cloned without it:
+   ```bash
+   git submodule update --init
+   ```
+2. Get an Azure Speech key (see [below](#getting-an-azure-speech-key)).
+3. Create your local secrets file from the template and fill in your key and region:
    ```bash
    cp .env.example .env
    ```
    `.env` is listed in `.gitignore`, so it never gets pushed.
-3. Create a virtual environment and install the requirements of the task you want to run:
+4. Create a virtual environment in the repository root, activate it, and install the requirements of the task you want to run:
    ```bash
    python -m venv .venv
    ```
    ```bash
+   .venv\Scripts\activate
+   ```
+   (macOS/Linux: `source .venv/bin/activate`)
+   ```bash
    pip install -r Week-5-Task-1/requirements.txt
    ```
 
-## Branches (Task 1)
+### Getting an Azure Speech key
+
+1. Sign in to https://portal.azure.com (students: [Azure for Students](https://azure.microsoft.com/free/students) gives free credit without a credit card).
+2. Search for **Speech services** and click **+ Create**.
+3. Choose a resource group, a **region**, a unique name and the **Free F0** pricing tier, then **Review + create**.
+   - Student subscriptions only allow some regions. If you get `RequestDisallowedByAzure`, open **Policy → Assignments → Allowed resource deployment regions → Parameters** to see the allowed ones (e.g. `francecentral`, `swedencentral`).
+4. Open the resource → **Keys and Endpoint**. Put **KEY 1** into `SPEECH_KEY` and **Location/Region** (lowercase, no spaces, e.g. `francecentral`) into `SPEECH_REGION`.
+
+Never put the key in code, commits or screen recordings.
+
+## Task 1: Speech-studio website
+
+```bash
+cd Week-5-Task-1
+python app.py
+```
+
+Then open http://127.0.0.1:5000. Prompts are in [PROMPTS.md](Week-5-Task-1/PROMPTS.md).
+
+### Branches
 
 | Branch | Feature |
 |---|---|
@@ -33,3 +65,29 @@ EE 471 Modern Software Development Practices and Technologies, Izmir Institute o
 The two features are developed on separate branches, as two developers would.
 The `speech-to-text` branch was created from the initial commit, before the text-to-speech code existed,
 so merging it into `main` afterwards produces the merge conflicts that Part 3 of the exercise asks to resolve.
+
+## Task 2: Voice-activated calculator
+
+The Week 4 web calculator (Flask + the Mini Project 1 `Calculator` class) with a microphone button and a voice.
+
+```bash
+pip install -r Week-5-Task-2/requirements.txt
+cd Week-5-Task-2
+python app.py
+```
+
+Then open http://127.0.0.1:5000 in Chrome or Edge and allow microphone access. Prompts are in [PROMPTS.md](Week-5-Task-2/PROMPTS.md).
+
+- **Microphone button → voice commands:** press it and say e.g. "five plus two is". Each word presses the matching key; the calculator then says the result ("is seven"). Press it again to stop.
+- **Buttons → voice:** every key press is spoken, e.g. `3 + 5 =` says "Three", "Plus", "Five", "is eight".
+
+| Key | 0–9 | . | ÷ | x | + | - | = |
+|---|---|---|---|---|---|---|---|
+| Word | Zero–Nine | Point | Over | Times | Plus | Minus | Is |
+
+| File | Purpose |
+|---|---|
+| `app.py` | Flask server: the page, `POST /api/calculate`, and `GET /api/speech-token`, which trades the secret key for a 10-minute Azure token so the key never reaches the browser |
+| `web_calculator.py` | `WebCalculator` from Week 4, extending the Mini Project 1 `Calculator` (unchanged) |
+| `static/script.js` | Calculator logic, speech recognition (voice commands) and speech synthesis (speaking keys) with the Azure Speech SDK for JavaScript |
+| `static/index.html`, `style.css` | Calculator page with the microphone button |
