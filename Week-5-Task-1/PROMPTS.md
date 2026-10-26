@@ -49,3 +49,23 @@ Each entry is a plain-English summary of what was asked, not a verbatim copy.
 > Merge `speech-to-text` into `main`. Both branches added the same files, so resolve the conflicts by hand:
 > keep both backends in one `app.py`, and turn the page into "Azure Speech Services" with "Text to Speech" and
 > "Speech to Text" tabs. Rename element ids that clash, test both features, and push the merge.
+
+## Part 4: Advanced features (`advanced-features` branch)
+
+### 1. Understand the features
+> Part 4 asks for real-time diarization, speech translation and pronunciation assessment. Explain what each
+> of these does, and suggest improvements we could build on top of each one.
+
+### 2. Build the three features in the browser
+> On an `advanced-features` branch, add Diarization, Translation and Pronunciation tabs. Run them in the browser
+> with the Azure Speech SDK for JavaScript so results appear in real time; the Flask server only hands out a
+> short-lived token. Each tab works with the microphone or a WAV file. Include all the suggested improvements:
+> colored speaker bubbles with timestamps, talk time per speaker and a .txt download for diarization; source
+> language choice, several target languages, live updates and playing translations with the Part 1
+> text-to-speech for translation; score bars, sample sentences, words colored by error type and clicking a word
+> to hear it for pronunciation assessment.
+
+### 3. Test without a microphone and merge
+> Generate test WAV files with Azure text-to-speech outside the repository: a two-voice conversation, an English
+> and a Turkish sentence, and the sample sentence read fully and with missing words. Test every tab with them,
+> then push the branch and merge it into `main`.

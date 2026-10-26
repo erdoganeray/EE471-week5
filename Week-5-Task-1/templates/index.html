@@ -14,6 +14,9 @@
         <div class="tabs" role="tablist">
             <button class="tab active" role="tab" aria-selected="true" data-panel="tts-panel">Text to Speech</button>
             <button class="tab" role="tab" aria-selected="false" data-panel="stt-panel">Speech to Text</button>
+            <button class="tab" role="tab" aria-selected="false" data-panel="diar-panel">Diarization</button>
+            <button class="tab" role="tab" aria-selected="false" data-panel="trans-panel">Translation</button>
+            <button class="tab" role="tab" aria-selected="false" data-panel="pron-panel">Pronunciation</button>
         </div>
 
         <!-- Text to Speech -->
@@ -60,8 +63,118 @@
 
             <div id="stt-status" class="status" hidden></div>
         </section>
+
+        <!-- Diarization: who said what, in real time -->
+        <section id="diar-panel" class="panel" role="tabpanel" hidden>
+            <p class="hint">Transcribe a conversation and see who said what. Use the microphone live, or a WAV file
+                with two or more speakers.</p>
+            <label for="diar-file">Speak live or choose a WAV file:</label>
+            <div class="audio-input">
+                <button id="diar-live-btn" class="btn btn-record">🎙 Start Live</button>
+                <button id="diar-stop-btn" class="btn btn-stop" disabled>⏹ Stop</button>
+                <input id="diar-file" type="file" accept=".wav,audio/wav">
+            </div>
+
+            <div class="buttons">
+                <button id="diar-file-btn" class="btn btn-primary">👥 Transcribe File</button>
+                <button id="diar-clear-btn" class="btn btn-secondary">Clear</button>
+            </div>
+
+            <div id="diar-status" class="status" hidden></div>
+
+            <section id="diar-result" class="result" hidden>
+                <div class="result-header">
+                    <h2>Conversation:</h2>
+                    <button id="diar-download-btn" class="btn btn-copy">⬇ Download .txt</button>
+                </div>
+                <div id="diar-stats" class="speaker-stats"></div>
+                <div id="diar-conversation" class="conversation"></div>
+                <p id="diar-partial" class="partial"></p>
+            </section>
+        </section>
+
+        <!-- Translation: speech in one language, text (and speech) in others -->
+        <section id="trans-panel" class="panel" role="tabpanel" hidden>
+            <div class="lang-row">
+                <label for="trans-source">Spoken language:</label>
+                <select id="trans-source">
+                    <option value="en-US">English</option>
+                    <option value="tr-TR">Turkish</option>
+                </select>
+            </div>
+            <fieldset id="trans-targets" class="targets">
+                <legend>Translate to:</legend>
+                <label class="check"><input type="checkbox" value="tr" checked> Turkish</label>
+                <label class="check"><input type="checkbox" value="en"> English</label>
+                <label class="check"><input type="checkbox" value="de" checked> German</label>
+                <label class="check"><input type="checkbox" value="fr"> French</label>
+                <label class="check"><input type="checkbox" value="es"> Spanish</label>
+            </fieldset>
+
+            <label for="trans-file">Speak live or choose a WAV file:</label>
+            <div class="audio-input">
+                <button id="trans-live-btn" class="btn btn-record">🎙 Start Live</button>
+                <button id="trans-stop-btn" class="btn btn-stop" disabled>⏹ Stop</button>
+                <input id="trans-file" type="file" accept=".wav,audio/wav">
+            </div>
+
+            <div class="buttons">
+                <button id="trans-file-btn" class="btn btn-primary">🌐 Translate File</button>
+                <button id="trans-clear-btn" class="btn btn-secondary">Clear</button>
+            </div>
+
+            <div id="trans-status" class="status" hidden></div>
+
+            <section id="trans-result" class="result" hidden>
+                <h2>Translations:</h2>
+                <div id="trans-list" class="translation-list"></div>
+                <div id="trans-partial" class="partial"></div>
+            </section>
+        </section>
+
+        <!-- Pronunciation assessment: read a sentence, get scores per sentence and per word -->
+        <section id="pron-panel" class="panel" role="tabpanel" hidden>
+            <label for="pron-sample">Choose a sample sentence or write your own:</label>
+            <select id="pron-sample">
+                <option>The quick brown fox jumps over the lazy dog.</option>
+                <option>Software development is a team effort.</option>
+                <option>I would like a cup of coffee, please.</option>
+                <option>Thank you for joining the EE471 class today.</option>
+            </select>
+            <textarea id="pron-text" rows="2" maxlength="300">The quick brown fox jumps over the lazy dog.</textarea>
+
+            <label for="pron-file">Read the sentence aloud or choose a WAV file:</label>
+            <div class="audio-input">
+                <button id="pron-live-btn" class="btn btn-record">🎙 Start Reading</button>
+                <input id="pron-file" type="file" accept=".wav,audio/wav">
+            </div>
+
+            <div class="buttons">
+                <button id="pron-file-btn" class="btn btn-primary">📊 Assess File</button>
+                <button id="pron-clear-btn" class="btn btn-secondary">Clear</button>
+            </div>
+
+            <div id="pron-status" class="status" hidden></div>
+
+            <section id="pron-result" class="result" hidden>
+                <h2>Scores:</h2>
+                <div id="pron-scores" class="scores"></div>
+                <h2>Words: <small>click a word to hear it</small></h2>
+                <div id="pron-words" class="words"></div>
+                <div class="legend">
+                    <span class="word word-correct">Correct</span>
+                    <span class="word word-mispronunciation">Mispronounced</span>
+                    <span class="word word-omission">Omitted</span>
+                    <span class="word word-insertion">Inserted</span>
+                    <span class="word word-prosody">Pause / tone issue</span>
+                </div>
+            </section>
+        </section>
     </main>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Azure Speech SDK for the features that run in the browser -->
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@1.53.0/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+    <script src="{{ url_for('static', filename='advanced.js') }}"></script>
 </body>
 </html>

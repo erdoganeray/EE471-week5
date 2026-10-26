@@ -59,8 +59,16 @@ Then open http://127.0.0.1:5000 in Chrome or Edge. Prompts are in [PROMPTS.md](W
 |---|---|---|
 | **Text to Speech** | Type text → play or download the generated WAV file | `POST /api/synthesize` with `{"text": "..."}` → `audio/wav` |
 | **Speech to Text** | Record with the microphone or choose a 16-bit PCM WAV file (mono or stereo) → transcription with a copy button | `POST /api/transcribe` with form field `audio` → `{"text": "..."}` |
+| **Diarization** | Live microphone or WAV file → who said what, as colored speaker bubbles with timestamps, talk time per speaker and a `.txt` download | Browser SDK `ConversationTranscriber` |
+| **Translation** | Speak English or Turkish → live translation into Turkish, English, German, French and/or Spanish; 🔊 plays a translation with the Text to Speech backend | Browser SDK `TranslationRecognizer` |
+| **Pronunciation** | Read a sample or custom sentence (live or WAV) → pronunciation, accuracy, fluency, completeness and prosody scores; words colored by error type, click a word to hear it | Browser SDK `PronunciationAssessmentConfig` |
 
 Errors are returned as `{"error": "<message>"}` and shown on the page.
+
+The first two tabs send the audio to Flask, which calls the Python Speech SDK. The Part 4 tabs (diarization,
+translation, pronunciation) run the [Speech SDK for JavaScript](https://www.npmjs.com/package/microsoft-cognitiveservices-speech-sdk)
+in the browser so results appear in real time; `GET /api/speech-token` gives the browser a 10-minute token,
+so the secret key never leaves the server. WAV files work best as 16 kHz, 16-bit mono.
 
 ### Branches
 
@@ -68,6 +76,7 @@ Errors are returned as `{"error": "<message>"}` and shown on the page.
 |---|---|
 | `text-to-speech` | Text → audio file |
 | `speech-to-text` | Audio / microphone → text |
+| `advanced-features` | Part 4: diarization, translation, pronunciation assessment |
 
 The two features are developed on separate branches, as two developers would.
 The `speech-to-text` branch was created from the initial commit, before the text-to-speech code existed,
