@@ -1,0 +1,14 @@
+# Secrets: keep API keys local only (use .env.example as the template)
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
