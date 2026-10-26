@@ -20,4 +20,12 @@ Each entry is a plain-English summary of what was asked, not a verbatim copy.
 
 ## Part 2: Speech-to-text (`speech-to-text` branch)
 
-_Not started yet._
+### 1. Build the speech-to-text website
+> On the `speech-to-text` branch, build a Flask website that runs on localhost. The user either records speech
+> with the microphone or uploads a WAV file, clicks "Transcribe Audio", and the backend converts it to text with
+> Azure Speech. Transcribe the whole file, not only the first sentence. Show the text with a "Copy Text" button,
+> add a "Clear" button, and show clear error messages for missing keys or unsupported files.
+
+### 2. Test without a microphone
+> I cannot speak right now. Generate test WAV files with Azure text-to-speech outside the repository
+> (short, long and stereo) and use them to test the transcription endpoint.
