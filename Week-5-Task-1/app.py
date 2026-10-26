@@ -1,4 +1,5 @@
-"""Azure Speech Services website: Flask backend for text-to-speech and speech-to-text with Azure Speech."""
+"""Azure Speech Services website: Flask backend for text-to-speech and speech-to-text with Azure Speech,
+plus speech tokens for the features that run in the browser (diarization, translation, pronunciation)."""
 
 import os
 import threading
@@ -7,6 +8,7 @@ from array import array
 from io import BytesIO
 
 import azure.cognitiveservices.speech as speechsdk
+import requests
 from dotenv import load_dotenv
 from flask import Flask, Response, jsonify, render_template, request
 
@@ -147,6 +149,26 @@ def transcribe_audio():
     if not text:
         return jsonify(error="No speech was recognized in the audio."), 422
     return jsonify(text=text)
+
+
+@app.get("/api/speech-token")
+def speech_token():
+    """Exchange the secret key for a 10-minute token, so the key never reaches the browser.
+    Diarization, translation and pronunciation assessment use it with the JavaScript Speech SDK."""
+    if not SPEECH_KEY or not SPEECH_REGION:
+        return jsonify(error="SPEECH_KEY or SPEECH_REGION is missing in the .env file."), 500
+
+    try:
+        response = requests.post(
+            f"https://{SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken",
+            headers={"Ocp-Apim-Subscription-Key": SPEECH_KEY},
+            timeout=10,
+        )
+        response.raise_for_status()
+    except requests.RequestException:
+        return jsonify(error="Could not get a speech token from Azure."), 502
+
+    return jsonify(token=response.text, region=SPEECH_REGION)
 
 
 @app.errorhandler(413)

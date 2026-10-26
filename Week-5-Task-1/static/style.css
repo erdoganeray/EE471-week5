@@ -20,7 +20,7 @@ body {
 
 .card {
     width: 100%;
-    max-width: 560px;
+    max-width: 640px;
     padding: 32px;
     background: #fff;
     border-radius: 16px;
@@ -44,16 +44,18 @@ h1 {
 
 .tabs {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 24px;
     border-bottom: 2px solid #eee;
 }
 
 .tab {
-    flex: 1;
-    padding: 10px;
+    flex: 1 1 auto;
+    padding: 10px 6px;
     margin-bottom: -2px;
     font: inherit;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
     font-weight: 600;
     color: #555;
     background: none;
@@ -244,3 +246,247 @@ audio {
     background: #ffebee;
     border: 1px solid #ffcdd2;
 }
+
+/* ---- Part 4: shared ---- */
+
+.hint {
+    margin: 0 0 16px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+select {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px;
+    font: inherit;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.panel > label:not(:first-child) {
+    margin-top: 16px;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.result-header h2 {
+    margin: 0;
+}
+
+.partial {
+    margin: 8px 0 0;
+    color: #888;
+    font-style: italic;
+}
+
+/* ---- Part 4: diarization ---- */
+
+.speaker-stats {
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.conversation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.utterance {
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border-left: 4px solid;
+    background: #fff;
+}
+
+.utterance-header {
+    margin-bottom: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Speakers alternate sides like a chat */
+.speaker-1,
+.speaker-3 {
+    align-self: flex-end;
+}
+
+.speaker-0 { border-color: #667eea; background: #eef1fd; }
+.speaker-1 { border-color: #43a047; background: #edf7ee; }
+.speaker-2 { border-color: #fb8c00; background: #fff4e5; }
+.speaker-3 { border-color: #8e24aa; background: #f6eaf8; }
+.speaker-unknown { border-color: #9e9e9e; background: #f5f5f5; }
+
+/* ---- Part 4: translation ---- */
+
+.lang-row label {
+    margin-bottom: 4px;
+}
+
+.targets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 8px 0 0;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.targets legend {
+    padding: 0 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+label.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-weight: 400;
+}
+
+label.check:has(input:disabled) {
+    color: #aaa;
+}
+
+.translation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.translation-item {
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.translation-item.partial {
+    border-style: dashed;
+}
+
+.translation-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+}
+
+.translation-line:first-child {
+    font-weight: 600;
+}
+
+.lang-tag {
+    flex: 0 0 auto;
+    min-width: 30px;
+    padding: 1px 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    color: #fff;
+    background: #667eea;
+    border-radius: 4px;
+}
+
+.translation-text {
+    flex: 1;
+}
+
+.btn-play {
+    flex: 0 0 auto;
+    padding: 2px 6px;
+    font-size: 1rem;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ---- Part 4: pronunciation assessment ---- */
+
+.result h2 small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #888;
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.score-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 36px;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.score-row:first-child {
+    font-weight: 700;
+}
+
+.bar {
+    height: 10px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+}
+
+.bar-fill.good { background: #43a047; }
+.bar-fill.fair { background: #fbc02d; }
+.bar-fill.poor { background: #e53935; }
+
+.score-value {
+    text-align: right;
+}
+
+.words,
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.legend {
+    margin-top: 12px;
+    font-size: 0.75rem;
+}
+
+.word {
+    padding: 4px 8px;
+    font: inherit;
+    border: 1px solid transparent;
+    border-radius: 6px;
+}
+
+button.word {
+    cursor: pointer;
+}
+
+.word-correct { color: #2e7d32; background: #e8f5e9; border-color: #c8e6c9; }
+.word-mispronunciation { color: #c62828; background: #ffebee; border-color: #ffcdd2; }
+.word-omission { color: #757575; background: #f5f5f5; border-color: #e0e0e0; text-decoration: line-through; }
+.word-insertion { color: #6a1b9a; background: #f3e5f5; border-color: #e1bee7; }
+.word-prosody { color: #8d6e00; background: #fff8e1; border-color: #ffe082; }
